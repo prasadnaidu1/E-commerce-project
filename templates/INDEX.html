@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+{% load staticfiles %}
+<!-- Basic Page Needs ==================================================
+================================================== -->
+
+<meta charset="utf-8">
+<title>E-commerce</title>
+<meta name="description" content="Place to put your description text">
+<meta name="author" content="">
+<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+<!-- Mobile Specific Metas ==================================================
+================================================== -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+<!-- CSS ==================================================
+================================================== -->
+
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}">
+<link rel="stylesheet" href="{% static 'css/screen.css' %}">
+<link rel="stylesheet" href="{% static 'css/skeleton.css' %}">
+
+
+<!-- Favicons ==================================================
+================================================== -->
+
+<link rel="shortcut icon" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+<!-- Google Fonts ==================================================
+================================================== -->
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<!--Content Part ==================================================
+================================================== -->
+<div id="header">
+     <marquee direction="right"> <h5 style="background-color: #efefef" align="center">E-Commerce</h5></marquee>
+  <div class="container">
+    <!-- Header | Logo, Menu
+		================================================== -->
+    <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" /></a></div>
+
+    <div class="mainmenu">
+      <div id="mainmenu">
+
+        <ul class="sf-menu">
+          <li><a href="/home/?type=home">Home</a></li>
+
+          <li><a href="/userlogin/?type=userlogin">Userlogin</a></li>
+          <li><a href="/userregistration/?type=register" id="visited">UserRegistration</a>
+               <li>
+             <div class="dropdown">
+  <button class="dropbtn">Search Items</button>
+  <div class="dropdown-content">
+      {% for x in categery %}
+    <a href="/search/?type=search&id={{ x }}">{{ x }}</a>
+      {% endfor %}
+
+  </div>
+</div>
+        </li>
+
+          </li>
+
+          <li><a href="/contact_us/?type=contact">Contact</a></li>
+          <li><a href="/opencart/?type=opencart">Cart Items : {{ items }}</a></li>
+
+         <div class="dropdown">
+
+
+
+        </ul>
+      </div>
+      <!-- mainmenu ends here -->
+
+      <!-- Responsive Menu -->
+      <form id="responsive-menu" action="#" method="post">
+
+      </form>
+    </div>
+    <!-- mainmenu ends here -->
+  </div>
+  <!-- container ends here -->
+
+</div>
+{% if type == "home" %}
+    <table border="2" align="center">
+
+        <tr>
+<td>
+            <style>
+        .image{
+            display: inline-block;
+            width: 10%;
+            margin: 20px 20px 20px 20px  ;
+
+        }
+    </style>
+            {% for x in product %}
+           <div class="image">
+                <a href="/productdetails/?type=product&id={{ x.product_id }}"><img src="{{ x.product_image.url }}" width="100%" height="100"><br></a>
+                Name:{{ x.product_name}}<br>
+             Price: {{ x.product_price}}<br>
+           <a href="/productdetails/?type=product&id={{ x.product_id}}">Show</a>
+           <a href="/addtocart/?id={{ x.product_id }}">Add To Cart</a>
+           </div>
+
+{% endfor %}
+        </td>
+                </tr>
+
+
+
+
+    </table>
+{% endif %}
+
+{# User Registration #}
+{% if type == "register" %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure>
+
+                        </figure>
+                         {% for x in image %}
+                            <img src=" {{ x.signup_image.url }}" width="400" height="300">
+                            {% endfor %}
+
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" class="register-form" id="login-form" action="/register/">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="t1" id="your_name" placeholder="Name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="number" name="t2" id="your_pass" placeholder="Contact"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="email" name="t3" id="your_pass" placeholder="Email"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Username"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="text" name="t4" id="your_pass" placeholder="Create Username"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="t5" id="your_pass" placeholder="Password"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="t6" id="your_pass" placeholder="Confirm Password"/>
+                            </div>
+
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sing in  Form -->
+
+
+    </div>
+
+{% endif %}
+{% if type == "userlogin" %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+   <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure></figure>
+                        {% for x in login_image %}
+                        <img src="{{ x.sign_in.url }}" width="300" height="200">
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Sign In</h2>
+                        <form method="POST" class="register-form" id="login-form" action="/logindetails/">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="p1" id="your_name" placeholder="Username"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="p2" id="your_pass" placeholder="Password"/>
+                            </div>
+                             <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                            </div>
+                        </form>
+                        <div class="social-login">
+                                <h3 align="center"><a href="/forget/?type=forget">Forget Password</a></h3>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+{% endif %}
+{# end Registration #}
+{% if type == "productDetails" %}
+    <table border="2" align="center">
+
+        <tr>
+<td>
+    <h4 align="center">welcome :{{ name }}</h4><br>
+    <h4 align="center"><a href="/logout/">logout</a></h4><br>
+
+    <h4 align="center">{{ message }}</h4><br>
+
+            <style>
+        .image{
+            display: inline-block;
+            width: 10%;
+            margin: 20px 20px 20px 20px  ;
+
+        }
+    </style>
+            {% for x in product %}
+           <div class="image">
+                <a href="/productdetails/?type=product&id={{ x.product_id }}"><img src="{{ x.product_image.url }}" width="100%" height="100"><br></a>
+                Name:{{ x.product_name}}<br>
+             Price: {{ x.product_price}}<br>
+           <a href="/productdetails/?type=product&id={{ x.product_id}}">Show</a>
+           <a href="/addtocart/?id={{ x.product_id }}">Add To Cart</a>
+           </div>
+
+{% endfor %}
+        </td>
+                </tr>
+
+
+
+
+    </table>
+{% endif %}
+
+
+
+{% if type == "search" %}
+
+    <table border="2" align="center">
+
+        <tr>
+<td>
+            <style>
+        .image{
+            display: inline-block;
+            width: 20%;
+            margin: 5px 20px 20px 10px  ;
+
+        }
+    </style>
+            {% for x in product %}
+           <div class="image">
+                <a href="/productdetails/?type=product&id={{ x.product_id }}"><img src="{{ x.product_image.url }}" width="200%" height="100"><br></a>
+                Name:{{ x.product_name}}<br>
+             Price: {{ x.product_price}}<br>
+           <a href="/productdetails/?type=product&id={{ x.product_id}}">Show</a>
+           <a href="/addtocart/?id={{ x.product_id }}">Add To Cart</a>
+           </div>
+
+{% endfor %}
+        </td>
+                </tr>
+
+
+
+
+    </table>
+{% endif %}
+{% if type == "product" %}
+    <table align="center" border="2">
+
+        <tr>
+            {% for x in product %}
+        <td>
+             <img src="{{ x.product_image.url }}"width="200" height="150">
+        </td>
+        </tr>
+        <tr><td align="center">Name :{{ x.product_name }}</td></tr>
+        <tr><td align="center">Price :{{ x.product_price }}</td></tr>
+        <tr><td align="center"><a href="/addtocart/?id={{ x.product_id }}">AddTo Cart</a></td></tr>
+
+    {% endfor %}
+    </table>
+{% endif %}
+{% if type == "forget" %}
+    <h5 align="center"> {{ message }}</h5>
+    <h5 align="center"> Forget Details</h5>
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+                               <h4 align="center">
+                                   <form action="/forgetdetails/" method="post">
+                                       {% csrf_token %}
+                        <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="p2" id="your_pass" placeholder="Enter Username"required>
+                            </div>
+                             <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Submit"/>
+                            </div>
+                                       </form>
+    </h4>
+{% endif %}
+{% if type == "newpassword" %}
+
+
+
+    <h5 align="center"> New Password Details</h5>
+    <h5 align="center">{{ message }}</h5>
+
+                                        <div>
+                                          <h4 align="center">
+
+                                   <form action="/newpassword/" method="post">
+                                       {% csrf_token %}
+
+
+                        <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="text" name="p1" id="your_pass" value="{{ name}} " readonly>
+                            </div>
+                                       <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="email" name="p2" id="your_pass" value="{{email }} " readonly>
+                            </div>
+                                           <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="tel" name="p3" id="your_pass" value="{{ contact }} " readonly>
+                            </div>
+                                       <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="text" name="p4" id="your_pass" value="{{ username }} " readonly>
+                            </div>
+                                       <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="p5" id="your_pass" placeholder="New Password" required>
+                            </div>
+                                              <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="p6" id="your_pass" placeholder="Confirm Password" required>
+                            </div>
+                             <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Submit"/>
+                            </div>
+                                   </form>
+                                       </h4>
+                                       </div>
+
+
+
+
+
+
+
+
+{% endif %}
+{% if type == "opencart" %}
+    <table border="2" align="center">
+
+        <tr>
+<td>
+            <style>
+        .image{
+            display: inline-block;
+            width: 20%;
+            margin: 5px 20px 20px 10px  ;
+
+        }
+    </style>
+            {% for x in res %}
+                {% for y in product %}
+                    {% if x.p_id == y.product_id %}
+           <div class="image">
+                <img src="{{ y.product_image.url }}" width="200%" height="100"><br>
+                Name:{{ y.product_name}}<br>
+             Price: {{ y.product_price}}<br>
+           <a href="/">BUY</a><br>
+           <a href="/remove/?id={{ y.product_id }}">Remove</a>
+           </div>
+                         {% if forloop.last %}
+     </tr>
+   {% else %}
+     {% if forloop.counter|divisibleby:"3" %}
+       </tr><tr>
+     {% endif %}
+                             {% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+        </td>
+                </tr>
+
+
+
+
+    </table>
+
+{% endif %}
+{% if type == "contact" %}
+    <h2 align="center">{{ message }}</h2>
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+ <form action="/contactdetails/" method="post">
+            {% csrf_token %}
+<div class="container contact">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="contact-info">
+				<img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
+				<h2>Feedback</h2>
+
+			</div>
+		</div>
+
+
+		<div class="col-md-9">
+			<div class="contact-form">
+				<div class="form-group">
+				  <label class="control-label col-sm-2" for="fname">First Name:</label>
+				  <div class="col-sm-10">
+					<input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="c1">
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label class="control-label col-sm-2" for="lname">Last Name:</label>
+				  <div class="col-sm-10">
+					<input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="c2">
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label class="control-label col-sm-2" for="email">Email:</label>
+				  <div class="col-sm-10">
+					<input type="email" class="form-control" id="email" placeholder="Enter email" name="c3">
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label class="control-label col-sm-2" for="comment">Comment:</label>
+				  <div class="col-sm-10">
+					<textarea class="form-control" rows="5" id="comment" name="c4"></textarea>
+				  </div>
+				</div>
+				<div class="form-group">
+				  <div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">Submit</button>
+				  </div>
+				</div>
+			</div>
+		</div>
+            </form>
+	</div>
+
+</div>
+
+
+{% endif %}
+
+</body>
+</html>
